@@ -13,8 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-  　  - name: Check files
-  　　  run: ls -R
+      - name: Check files  
+        run: ls -R
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -31,4 +31,3 @@ jobs:
           POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: python monitor_snpt.py
-
