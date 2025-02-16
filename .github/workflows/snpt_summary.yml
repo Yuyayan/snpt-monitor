@@ -29,3 +29,9 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: python snpt_summary.py
 
+      - name: Debug API Response
+        env:
+          POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
+        run: |
+          curl "https://api.polygonscan.com/api?module=account&action=tokentx&contractaddress=0x22737f5bbb7c5b5ba407b0c1c9a9cdf66cf25d7d&address=0xe7ee1d51f58a450552ff45c37630335d534ce9e3&sort=desc&apikey=$POLYGONSCAN_API_KEY"
+
