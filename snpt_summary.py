@@ -57,26 +57,3 @@ message = f"""
 requests.post(DISCORD_WEBHOOK_URL, json={"content": message})
 
 print("✅ 6時間ごとの SNPT 小計を Discord に送信しました！")
-
-
-import requests
-import datetime
-import os
-
-# 環境変数から API キーと Discord Webhook URL を取得
-POLYGONSCAN_API_KEY = os.getenv("POLYGONSCAN_API_KEY")
-DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
-
-# 監視対象のウォレットアドレス
-WALLET_ADDRESS = "0xe7ee1d51f58a450552ff45c37630335d534ce9e3"
-SNPT_CONTRACT = "0x22737f5bbb7c5b5ba407b0c1c9a9cdf66cf25d7d"
-
-# PolygonScan API でトランザクション取得
-url = f"https://api.polygonscan.com/api?module=account&action=tokentx&contractaddress={SNPT_CONTRACT}&address={WALLET_ADDRESS}&startblock=0&endblock=99999999&sort=asc&apikey={POLYGONSCAN_API_KEY}"
-
-print(f"🔍 API URL: {url}")  # URL を出力（APIキーは含まない）
-
-response = requests.get(url)
-
-print(f"📥 API Response Status: {response.status_code}")  # HTTP ステータスコードを出力
-print(f"📥 API Response Content: {response.text}")  # APIのレスポンス内容を出力
