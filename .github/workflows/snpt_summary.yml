@@ -1,12 +1,12 @@
-name: SNPT Transactions Report
+name: SNPT Transactions Summary
 
 on:
   schedule:
-    - cron: '0 0,6,12,18 * * *'  # JST 0:00, 6:00, 12:00, 18:00 に実行（UTC 15:00, 21:00, 3:00, 9:00）
-  workflow_dispatch:  # 手動実行可能
+    - cron: '0 15,21,3,9 * * *'  # JST 0:00, 6:00, 12:00, 18:00 (UTC 15:00, 21:00, 3:00, 9:00)
+  workflow_dispatch:  # 手動実行も可能
 
 jobs:
-  run-report:
+  run-summary:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,15 +23,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Run transaction summary
+      - name: Run SNPT summary script
         env:
           POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: python snpt_summary.py
-
-      - name: Debug API Response
-        env:
-          POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
-        run: |
-          curl "https://api.polygonscan.com/api?module=account&action=tokentx&contractaddress=0x22737f5bbb7c5b5ba407b0c1c9a9cdf66cf25d7d&address=0xe7ee1d51f58a450552ff45c37630335d534ce9e3&sort=desc&apikey=$POLYGONSCAN_API_KEY"
-
